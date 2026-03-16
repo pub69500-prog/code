@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TravailLex 2026 — Code du Travail</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚖️</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ════════════════════════════════════════════════
+   TravailLex 2026 — Design system
+   ════════════════════════════════════════════════ */
+:root {
+  --ink: #0a0c10;
+  --deep: #111520;
+  --panel: #151b27;
+  --card: #1a2236;
+  --card2: #1f2840;
+  --edge: #263044;
+  --edge2: #2e3a52;
+  --parchment: #e8dfc8;
+  --parch2: #f0e8d0;
+  --gold: #c8913a;
+  --gold2: #e8b060;
+  --gold3: #f5cc80;
+  --gold-glow: rgba(200,145,58,0.08);
+  --gold-shine: rgba(200,145,58,0.18);
+  --text: #d8e0ec;
+  --text2: #8898b4;
+  --text3: #4a5870;
+  --red: #e05050;
+  --red-dim: rgba(224,80,80,0.1);
+  --green: #4ec080;
+  --green-dim: rgba(78,192,128,0.1);
+  --blue: #60a8e8;
+  --blue-dim: rgba(96,168,232,0.1);
+  --amber: #d09030;
+  --amber-dim: rgba(208,144,48,0.1);
+  --r: 8px;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--ink);
+  color: var(--text);
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ── TOPBAR ── */
+.topbar {
+  height: 50px;
+  background: var(--deep);
+  border-bottom: 1px solid var(--edge);
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 10;
+}
+
+.logo {
+  display: flex; align-items: center; gap: 10px;
+  padding-right: 20px;
+  border-right: 1px solid var(--edge);
+  flex-shrink: 0;
+}
+
+.logo-seal {
+  width: 32px; height: 32px;
+  background: conic-gradient(from 0deg, var(--gold), #8b6914, var(--gold));
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  box-shadow: 0 0 12px rgba(200,145,58,0.3);
+}
+
+.logo-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem; font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.logo-text em { color: var(--gold2); font-style: italic; }
+.logo-year { font-size: 9px; color: var(--text3); letter-spacing: .15em; text-transform: uppercase; }
+
+.nav { display: flex; gap: 0; padding-left: 8px; flex: 1; overflow-x: auto; scrollbar-width: none; }
+.nav::-webkit-scrollbar { display: none; }
+
+.pill {
+  background: none; border: none;
+  font-family: 'IBM Plex Sans', sans-serif; font-size: 12.5px; font-weight: 500;
+  color: var(--text2); padding: 0 16px; height: 50px;
+  cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap;
+  transition: all .15s;
+}
+.pill:hover { color: var(--text); }
+.pill.on { color: var(--gold2); border-bottom-color: var(--gold); }
+
+.topbar-right {
+  display: flex; align-items: center; gap: 10px;
+  margin-left: auto; flex-shrink: 0;
+}
+
+.live-badge {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 10.5px; font-weight: 600; color: var(--green);
+}
+.live-dot {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--green);
+  animation: breathe 2.5s ease-in-out infinite;
+}
+@keyframes breathe {
+  0%,100% { opacity:1; box-shadow:0 0 0 0 rgba(78,192,128,.5); }
+  50% { opacity:.6; box-shadow:0 0 0 4px rgba(78,192,128,0); }
+}
+
+.lf-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(200,145,58,.12);
+  border: 1px solid rgba(200,145,58,.35);
+  color: var(--gold2); border-radius: 6px;
+  padding: 5px 12px; font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 11px; font-weight: 600; text-decoration: none;
+  transition: all .15s;
+}
+.lf-btn:hover { background: rgba(200,145,58,.22); border-color: var(--gold); }
+
+.fullscreen-btn {
+  background: var(--card); border: 1px solid var(--edge2);
+  color: var(--text2); border-radius: 6px;
+  padding: 5px 10px; font-size: 14px; cursor: pointer;
+  transition: all .15s; title: "Plein écran";
+}
+.fullscreen-btn:hover { color: var(--text); border-color: var(--gold); }
+
+/* ── BODY ── */
+.workspace { display: flex; height: calc(100vh - 70px); overflow: hidden; }
+
+/* ── SIDEBAR ── */
+.sidebar {
+  width: 260px; min-width: 260px;
+  background: var(--panel); border-right: 1px solid var(--edge);
+  display: flex; flex-direction: column; overflow: hidden;
+  transition: width .3s;
+}
+
+.sb-label {
+  padding: 10px 14px 8px;
+  font-size: 10px; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--text3);
+  border-bottom: 1px solid var(--edge);
+}
+
+.sb-search {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--edge);
+  position: relative;
+}
+.sb-search input {
+  width: 100%; background: var(--ink); border: 1px solid var(--edge);
+  border-radius: 5px; padding: 6px 10px 6px 28px;
+  font-family: 'IBM Plex Sans', sans-serif; font-size: 12px; color: var(--text);
+  outline: none; transition: border-color .15s;
+}
+.sb-search input:focus { border-color: var(--gold); }
+.sb-search input::placeholder { color: var(--text3); }
+.sb-icon { position: absolute; left: 19px; top: 50%; transform: translateY(-50%); color: var(--text3); font-size: 13px; pointer-events: none; }
+
+.tree { flex: 1; overflow-y: auto; padding: 6px 0 20px; scrollbar-width: thin; scrollbar-color: var(--edge) transparent; }
+
+.tg-head {
+  display: flex; align-items: center; gap: 7px;
+  padding: 5px 12px; font-size: 10px; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--text3);
+  cursor: pointer; user-select: none; transition: color .12s;
+}
+.tg-head:hover { color: var(--text2); }
+.tg-arrow { font-size: 8px; transition: transform .2s; }
+.tg-arrow.o { transform: rotate(90deg); }
+.tg-kids { display: none; }
+.tg-kids.o { display: block; }
+
+.ti {
+  display: flex; align-items: flex-start; gap: 7px;
+  padding: 6px 12px 6px 22px; font-size: 12.5px; color: var(--text2);
+  cursor: pointer; border-left: 2px solid transparent;
+  transition: all .12s; line-height: 1.35;
+}
+.ti:hover { color: var(--text); background: var(--gold-glow); }
+.ti.sel { color: var(--gold2); border-left-color: var(--gold); background: var(--gold-shine); }
+.ti-num { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--gold); width: 38px; flex-shrink: 0; padding-top: 1px; }
+.ti-tag { margin-left: auto; font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 8px; flex-shrink: 0; }
+.tt-n { background: var(--green-dim); color: var(--green); border: 1px solid rgba(78,192,128,.2); }
+.tt-m { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(208,144,48,.2); }
+.tt-j { background: var(--red-dim); color: var(--red); border: 1px solid rgba(224,80,80,.2); }
+
+/* ── MAIN ── */
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; background: var(--ink); }
+
+.vbar {
+  height: 40px; flex-shrink: 0;
+  background: var(--panel); border-bottom: 1px solid var(--edge);
+  display: flex; align-items: center; padding: 0 14px; gap: 6px;
+}
+.vb {
+  background: none; border: 1px solid transparent; color: var(--text2);
+  font-family: 'IBM Plex Sans', sans-serif; font-size: 11.5px; font-weight: 500;
+  padding: 4px 12px; border-radius: 5px; cursor: pointer; transition: all .15s;
+}
+.vb:hover { color: var(--text); background: var(--gold-glow); }
+.vb.on { color: var(--gold2); background: var(--gold-shine); border-color: rgba(200,145,58,.3); }
+.vb-lf {
+  display: flex; align-items: center; gap: 5px;
+  background: rgba(96,168,232,.08); border: 1px solid rgba(96,168,232,.25);
+  color: var(--blue); font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 11px; font-weight: 600; padding: 4px 11px; border-radius: 5px;
+  cursor: pointer; text-decoration: none; transition: all .15s;
+  margin-left: auto;
+}
+.vb-lf:hover { background: rgba(96,168,232,.15); }
+
+.tab-content { display: none; flex: 1; overflow: hidden; flex-direction: column; }
+.tab-content.on { display: flex; }
+
+/* ── SPLIT VIEW ── */
+.split { display: flex; flex: 1; overflow: hidden; }
+.pane { display: flex; flex-direction: column; overflow: hidden; flex: 1; }
+.pane-body { flex: 1; overflow-y: auto; padding: 20px 22px; scrollbar-width: thin; scrollbar-color: var(--edge) transparent; }
+
+.drag-h { width: 4px; cursor: col-resize; flex-shrink: 0; background: var(--edge); transition: background .15s; }
+.drag-h:hover, .drag-h.dr { background: var(--gold); }
+
+.lf-pane { background: var(--deep); display: flex; flex-direction: column; overflow: hidden; }
+.lf-toolbar {
+  padding: 7px 12px; border-bottom: 1px solid var(--edge);
+  display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+}
+.lf-url {
+  flex: 1; background: var(--ink); border: 1px solid var(--edge); border-radius: 5px;
+  padding: 4px 8px; font-family: 'IBM Plex Mono', monospace;
+  font-size: 10.5px; color: var(--blue); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.lf-body { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 28px; text-align: center; }
+.lf-icon { width: 52px; height: 52px; border-radius: 50%; background: rgba(200,145,58,.12); display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; font-size: 24px; }
+.lf-title { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 700; margin-bottom: 7px; color: var(--parch2); }
+.lf-desc { font-size: 12.5px; color: var(--text2); line-height: 1.7; max-width: 290px; margin-bottom: 18px; }
+.lf-open {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: linear-gradient(135deg, var(--gold), var(--amber));
+  color: var(--ink); border: none; border-radius: 7px;
+  padding: 10px 20px; font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 13px; font-weight: 700; cursor: pointer; text-decoration: none;
+  transition: all .15s; box-shadow: 0 4px 16px rgba(200,145,58,.3);
+}
+.lf-open:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(200,145,58,.4); }
+.lf-note { font-size: 10.5px; color: var(--text3); margin-top: 12px; max-width: 270px; line-height: 1.5; }
+
+/* ── WELCOME ── */
+.welcome { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; padding: 32px; text-align: center; }
+.w-seal { width: 68px; height: 68px; border-radius: 50%; background: conic-gradient(from 0deg, var(--gold), #8b6914, var(--gold3)); display: flex; align-items: center; justify-content: center; font-size: 30px; margin: 0 auto 18px; box-shadow: 0 0 40px rgba(200,145,58,.2); }
+.w-h { font-family: 'Cormorant Garamond', serif; font-size: 1.75rem; font-weight: 700; margin-bottom: 10px; }
+.w-h em { color: var(--gold2); font-style: italic; }
+.w-p { font-size: 13.5px; color: var(--text2); max-width: 400px; line-height: 1.7; margin-bottom: 28px; }
+.w-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 420px; width: 100%; }
+.wc { background: var(--card); border: 1px solid var(--edge); border-radius: var(--r); padding: 12px 14px; text-align: left; cursor: pointer; transition: all .18s; }
+.wc:hover { border-color: var(--gold); background: var(--card2); transform: translateY(-2px); }
+.wc-ico { font-size: 20px; margin-bottom: 6px; }
+.wc-t { font-size: 12.5px; font-weight: 600; color: var(--gold2); margin-bottom: 3px; }
+.wc-d { font-size: 11px; color: var(--text2); line-height: 1.4; }
+
+/* ── ARTICLE ── */
+.art-block { background: var(--card); border: 1px solid var(--edge); border-radius: var(--r); margin-bottom: 16px; overflow: hidden; animation: rise .22s ease; }
+@keyframes rise { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+.art-head { display: flex; align-items: flex-start; justify-content: space-between; padding: 12px 16px 10px; background: var(--card2); border-bottom: 1px solid var(--edge); gap: 10px; flex-wrap: wrap; }
+.art-ref { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: var(--gold); margin-bottom: 3px; }
+.art-title { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 700; color: var(--parch2); }
+.art-btns { display: flex; gap: 6px; flex-wrap: wrap; flex-shrink: 0; }
+.abtn { display: flex; align-items: center; gap: 4px; background: var(--card); border: 1px solid var(--edge2); color: var(--text2); border-radius: 5px; padding: 4px 10px; font-size: 11px; font-weight: 500; cursor: pointer; text-decoration: none; transition: all .14s; font-family: 'IBM Plex Sans', sans-serif; }
+.abtn:hover { color: var(--text); border-color: var(--edge2); }
+.abtn-gold { background: var(--gold-shine); color: var(--gold2); border-color: rgba(200,145,58,.3); }
+.abtn-gold:hover { background: rgba(200,145,58,.25); border-color: var(--gold); }
+.abtn-blue { background: var(--blue-dim); color: var(--blue); border-color: rgba(96,168,232,.25); }
+.abtn-blue:hover { background: rgba(96,168,232,.2); }
+.art-body { padding: 16px 18px; font-size: 13.5px; line-height: 1.8; color: var(--text); }
+.art-foot { padding: 8px 16px; background: rgba(0,0,0,.2); border-top: 1px solid var(--edge); display: flex; align-items: center; justify-content: space-between; font-size: 11px; color: var(--text3); flex-wrap: wrap; gap: 6px; }
+.art-foot a { color: var(--blue); text-decoration: none; }
+
+/* ── JURISPRUDENCES ── */
+.jp-card { background: var(--card); border: 1px solid var(--edge); border-radius: var(--r); margin-bottom: 14px; overflow: hidden; }
+.jp-head { padding: 11px 15px 9px; background: var(--card2); border-bottom: 1px solid var(--edge); display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.jp-ref { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--gold); margin-bottom: 3px; }
+.jp-t { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 700; color: var(--parch2); line-height: 1.25; }
+.jp-chips { display: flex; gap: 5px; flex-wrap: wrap; flex-shrink: 0; margin-top: 2px; }
+.chip { font-size: 9.5px; font-weight: 700; padding: 2px 8px; border-radius: 10px; letter-spacing: .04em; }
+.chip-r { background: var(--red-dim); color: var(--red); border: 1px solid rgba(224,80,80,.25); }
+.chip-a { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(208,144,48,.25); }
+.chip-g { background: var(--green-dim); color: var(--green); border: 1px solid rgba(78,192,128,.25); }
+.chip-b { background: var(--blue-dim); color: var(--blue); border: 1px solid rgba(96,168,232,.25); }
+.jp-body { padding: 13px 16px; }
+.jp-lbl { font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--text3); margin-bottom: 4px; }
+.jp-txt { font-size: 13px; color: var(--text); line-height: 1.65; margin-bottom: 10px; }
+.jp-pills { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px; }
+.art-pill { display: inline-flex; align-items: center; background: var(--gold-glow); border: 1px solid rgba(200,145,58,.2); color: var(--gold); font-family: 'IBM Plex Mono', monospace; font-size: 11px; padding: 2px 8px; border-radius: 4px; text-decoration: none; cursor: pointer; transition: all .12s; }
+.art-pill:hover { background: var(--gold-shine); border-color: rgba(200,145,58,.4); }
+.jp-foot { padding: 8px 15px; background: rgba(0,0,0,.15); border-top: 1px solid var(--edge); display: flex; justify-content: space-between; font-size: 11px; color: var(--text3); flex-wrap: wrap; gap: 6px; align-items: center; }
+.jp-foot a { color: var(--blue); text-decoration: none; }
+.jp-foot-btns { display: flex; gap: 6px; }
+
+/* ── CHIFFRES ── */
+.cg { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; margin-bottom: 18px; }
+.cc { background: var(--card); border: 1px solid var(--edge); border-radius: var(--r); padding: 14px 12px; text-align: center; }
+.cc:hover { border-color: var(--edge2); }
+.cv { font-family: 'Cormorant Garamond', serif; font-size: 1.45rem; font-weight: 700; color: var(--gold2); line-height: 1.1; }
+.cl { font-size: 11px; color: var(--text2); margin-top: 5px; line-height: 1.35; }
+.ch { font-size: 10px; font-weight: 600; margin-top: 3px; }
+.cup { color: var(--green); } .cdn { color: var(--red); } .cne { color: var(--text3); }
+
+/* ── CHAT ── */
+.chat-wrap { flex: 1; display: flex; flex-direction: column; overflow: hidden; background: var(--deep); }
+.chat-log { flex: 1; overflow-y: auto; padding: 18px 20px; display: flex; flex-direction: column; gap: 14px; scrollbar-width: thin; scrollbar-color: var(--edge) transparent; }
+.cm { display: flex; gap: 9px; max-width: 91%; animation: rise .2s ease; }
+.cm.u { margin-left: auto; flex-direction: row-reverse; }
+.cm-av { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; margin-top: 2px; }
+.cm-av.ai { background: conic-gradient(from 0deg, var(--gold), #8b6914); }
+.cm-av.hu { background: var(--card2); border: 1px solid var(--edge2); }
+.cm-bub { padding: 11px 15px; border-radius: 10px; font-size: 13px; line-height: 1.7; flex: 1; }
+.cm.ai .cm-bub { background: var(--card); border: 1px solid var(--edge); border-top-left-radius: 3px; }
+.cm.u .cm-bub { background: var(--gold-shine); border: 1px solid rgba(200,145,58,.25); color: var(--gold3); border-top-right-radius: 3px; }
+.cm-bub strong { color: var(--gold2); }
+.cm-bub code { background: var(--ink); border: 1px solid var(--edge); padding: 1px 5px; border-radius: 3px; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: var(--gold); }
+.cm-bub a { color: var(--blue); text-decoration: none; }
+.cm-bub a:hover { text-decoration: underline; }
+.cm-bub ul { padding-left: 16px; margin: 5px 0; }
+.cm-bub li { margin-bottom: 3px; }
+.cm-bub h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--gold2); margin: 12px 0 5px; border-bottom: 1px solid var(--edge); padding-bottom: 3px; }
+.cm-bub h4 { color: var(--gold); font-size: .95rem; margin: 10px 0 4px; }
+.cm-bub blockquote { border-left: 2px solid var(--gold); padding: 6px 12px; margin: 7px 0; color: var(--text2); background: var(--gold-glow); border-radius: 0 4px 4px 0; }
+.cm-bub hr { border: none; border-top: 1px solid var(--edge); margin: 10px 0; }
+.cm-meta { font-size: 10px; color: var(--text3); margin-top: 4px; display: flex; gap: 5px; align-items: center; }
+.cm-meta a { color: var(--blue); text-decoration: none; }
+.typing { display: flex; align-items: center; gap: 5px; padding: 11px 15px; background: var(--card); border: 1px solid var(--edge); border-radius: 10px; border-top-left-radius: 3px; color: var(--text2); font-size: 12.5px; }
+.tdots span { display: inline-block; width: 5px; height: 5px; background: var(--gold); border-radius: 50%; animation: td 1.4s ease infinite; }
+.tdots span:nth-child(2) { animation-delay: .2s; }
+.tdots span:nth-child(3) { animation-delay: .4s; }
+@keyframes td { 0%,80%,100%{transform:translateY(0)} 40%{transform:translateY(-5px)} }
+.suggs { padding: 8px 14px 10px; background: var(--panel); border-top: 1px solid var(--edge); display: flex; gap: 6px; flex-wrap: wrap; }
+.sg { background: var(--card); border: 1px solid var(--edge); color: var(--text2); border-radius: 16px; padding: 4px 11px; font-size: 11px; cursor: pointer; transition: all .14s; font-family: 'IBM Plex Sans', sans-serif; }
+.sg:hover { border-color: var(--gold); color: var(--gold2); background: var(--gold-glow); }
+.cinput { padding: 10px 14px 14px; background: var(--panel); border-top: 1px solid var(--edge); flex-shrink: 0; }
+.crow { display: flex; gap: 8px; align-items: flex-end; }
+.cta { flex: 1; background: var(--ink); border: 1.5px solid var(--edge); border-radius: 8px; padding: 9px 12px; font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; color: var(--text); outline: none; resize: none; line-height: 1.5; min-height: 42px; max-height: 120px; transition: border-color .15s; scrollbar-width: thin; }
+.cta:focus { border-color: var(--gold); }
+.cta::placeholder { color: var(--text3); }
+.csnd { background: linear-gradient(135deg, var(--gold), var(--amber)); border: none; border-radius: 8px; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 16px; color: var(--ink); transition: all .15s; flex-shrink: 0; }
+.csnd:hover { transform: scale(1.05); box-shadow: 0 4px 14px rgba(200,145,58,.35); }
+.csnd:disabled { opacity: .35; cursor: not-allowed; transform: none; }
+.chint { font-size: 10px; color: var(--text3); text-align: center; margin-top: 6px; }
+
+/* ── MARKDOWN RENDER ── */
+.rmd h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--gold2); margin: 14px 0 6px; border-bottom: 1px solid var(--edge); padding-bottom: 3px; }
+.rmd h4 { color: var(--gold); font-size: .95rem; margin: 10px 0 4px; }
+.rmd ul, .rmd ol { padding-left: 18px; margin: 5px 0; }
+.rmd li { margin-bottom: 3px; }
+.rmd code { background: var(--ink); border: 1px solid var(--edge); padding: 1px 5px; border-radius: 3px; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: var(--gold); }
+.rmd pre { background: var(--ink); border: 1px solid var(--edge); padding: 12px; border-radius: 6px; overflow-x: auto; margin: 8px 0; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; }
+.rmd blockquote { border-left: 2px solid var(--gold); padding: 6px 12px; margin: 7px 0; color: var(--text2); background: var(--gold-glow); border-radius: 0 4px 4px 0; }
+.rmd a { color: var(--blue); text-decoration: none; }
+.rmd a:hover { text-decoration: underline; }
+.rmd strong { color: var(--gold2); }
+.rmd hr { border: none; border-top: 1px solid var(--edge); margin: 12px 0; }
+.rmd p { margin: 6px 0; }
+
+/* ── SECTION HEADER ── */
+.sec-header { margin-bottom: 16px; }
+.sec-h { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 700; margin-bottom: 3px; color: var(--parch2); }
+.sec-sub { font-size: 12px; color: var(--text2); }
+
+/* ── STATUS BAR ── */
+.statusbar { height: 22px; background: var(--deep); border-top: 1px solid var(--edge); display: flex; align-items: center; padding: 0 14px; gap: 18px; font-size: 10px; color: var(--text3); flex-shrink: 0; }
+.sb-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green); }
+
+/* Scrollbar global */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--edge); border-radius: 10px; }
+</style>
+</head>
+<body>
+
+<!-- ═══ TOPBAR ═══ -->
+<div class="topbar">
+  <div class="logo">
+    <div class="logo-seal">⚖️</div>
+    <div>
+      <div class="logo-text">Travail<em>Lex</em></div>
+      <div class="logo-year">Code du travail · 2026</div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <button class="pill on" onclick="switchTab('art',this)">📋 Articles</button>
+    <button class="pill" onclick="switchTab('juris',this)">⚖️ Jurisprudences</button>
+    <button class="pill" onclick="switchTab('chiffres',this)">📊 Chiffres clés</button>
+    <button class="pill" onclick="switchTab('chat',this)">🤖 Assistant IA</button>
+  </nav>
+
+  <div class="topbar-right">
+    <div class="live-badge"><div class="live-dot"></div>IA LIVE</div>
+    <a class="lf-btn" href="https://legifrance.gouv.fr/codes/texte_lc/LEGITEXT000006072050/" target="_blank">🏛️ Légifrance ↗</a>
+    <button class="fullscreen-btn" onclick="showModal()" title="Clé API" style="font-size:13px">🔑</button>
+    <button class="fullscreen-btn" onclick="toggleFullscreen()" title="Plein écran (F11)">⛶</button>
+  </div>
+</div>
+
+<!-- ═══ WORKSPACE ═══ -->
+<div class="workspace">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sb-label">Plan du Code du travail</div>
+    <div class="sb-search">
+      <span class="sb-icon">🔍</span>
+      <input type="text" placeholder="Rechercher un article..." id="tq" oninput="filterTree(this.value)">
+    </div>
+    <div class="tree" id="tree"></div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- VIEWBAR -->
+    <div class="vbar" id="vbar">
+      <button class="vb on" id="vbAI" onclick="setView('ai')">🤖 Analyse IA</button>
+      <button class="vb" id="vbSplit" onclick="setView('split')">⬛ Vue double</button>
+      <a class="vb-lf" id="lfDirect" href="https://legifrance.gouv.fr/codes/texte_lc/LEGITEXT000006072050/" target="_blank">🏛️ Ouvrir dans Légifrance ↗</a>
+    </div>
+
+    <!-- TAB ARTICLES -->
+    <div class="tab-content on" id="tab-art">
+      <div class="split" id="splitWrap">
+        <!-- AI PANE -->
+        <div class="pane" id="paneAI">
+          <div class="pane-body" id="aiBody">
+            <div class="welcome" id="wscreen">
+              <div class="w-seal">⚖️</div>
+              <div class="w-h">Code du Travail <em>2026</em></div>
+              <p class="w-p">Sélectionnez un article dans l'arborescence pour une analyse IA en temps réel, ou utilisez l'assistant pour interroger textes et jurisprudences.</p>
+              <div class="w-grid">
+                <div class="wc" onclick="goChat('Quelles sont toutes les modifications du Code du travail entrées en vigueur au 1er janvier 2026 ?')"><div class="wc-ico">✨</div><div class="wc-t">Nouveautés 2026</div><div class="wc-d">Toutes les modifications officielles</div></div>
+                <div class="wc" onclick="goChat('Quels sont les derniers arrêts de la chambre sociale de la Cour de cassation en 2025-2026 ?')"><div class="wc-ico">⚖️</div><div class="wc-t">Jurisprudences live</div><div class="wc-d">Derniers arrêts en temps réel</div></div>
+                <div class="wc" onclick="loadArt('smic')"><div class="wc-ico">💶</div><div class="wc-t">SMIC 2026</div><div class="wc-d">Montants et décret officiel</div></div>
+                <div class="wc" onclick="loadArt('conges')"><div class="wc-ico">🏖️</div><div class="wc-t">Congés payés</div><div class="wc-d">Revirements sept. 2025</div></div>
+              </div>
+            </div>
+            <div id="artContent" style="display:none"></div>
+          </div>
+        </div>
+        <!-- DRAG -->
+        <div class="drag-h" id="dragH" style="display:none"></div>
+        <!-- LÉGIFRANCE PANE -->
+        <div class="pane lf-pane" id="paneLF" style="display:none">
+          <div class="lf-toolbar">
+            <span style="font-size:9px;font-weight:700;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;flex-shrink:0">LÉGIFRANCE</span>
+            <div class="lf-url" id="lfUrl">legifrance.gouv.fr</div>
+            <a class="abtn abtn-blue" id="lfNewTab" href="https://legifrance.gouv.fr" target="_blank" style="font-size:10.5px;padding:3px 9px">↗ Ouvrir</a>
+          </div>
+          <div class="lf-body">
+            <div class="lf-icon">🏛️</div>
+            <div class="lf-title">Légifrance — Accès direct</div>
+            <p class="lf-desc">Légifrance utilise <code style="background:var(--card);border:1px solid var(--edge);padding:1px 5px;border-radius:3px;font-family:'IBM Plex Mono',monospace;font-size:11px">X-Frame-Options: SAMEORIGIN</code>, identique pour tous les outils juridiques du marché. Cliquez pour ouvrir l'article exact dans un nouvel onglet.</p>
+            <a class="lf-open" id="lfOpenBtn" href="https://legifrance.gouv.fr" target="_blank">🏛️ Ouvrir l'article sur Légifrance</a>
+            <p class="lf-note">Le lien s'adapte automatiquement à l'article sélectionné dans l'arborescence.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB JURISPRUDENCES -->
+    <div class="tab-content" id="tab-juris">
+      <div class="pane-body" style="flex:1;overflow-y:auto">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+          <div class="sec-header">
+            <div class="sec-h">Jurisprudences — chambre sociale 2025–2026</div>
+            <div class="sec-sub">Arrêts connus pré-chargés · Bouton « Actualiser » pour recherche IA temps réel</div>
+          </div>
+          <button class="abtn abtn-gold" id="jpRefBtn" onclick="loadJurisLive()" style="font-size:12px;padding:6px 14px">🔄 Actualiser via IA</button>
+        </div>
+        <div id="jpStatic"></div>
+        <div id="jpLive"></div>
+      </div>
+    </div>
+
+    <!-- TAB CHIFFRES -->
+    <div class="tab-content" id="tab-chiffres">
+      <div class="pane-body" style="flex:1;overflow-y:auto">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+          <div class="sec-header">
+            <div class="sec-h">Chiffres clés 2026</div>
+            <div class="sec-sub">En vigueur au 1er janvier 2026 — Décret n° 2025-1228 & BOSS</div>
+          </div>
+          <button class="abtn abtn-gold" onclick="goChat('Vérifiez et actualisez tous les chiffres clés du droit du travail français en vigueur en 2026 : SMIC, cotisations, plafonds, indemnités, délais')" style="font-size:12px;padding:6px 14px">🤖 Vérifier via IA</button>
+        </div>
+        <div class="cg" id="cg"></div>
+        <div style="background:var(--card);border:1px solid var(--edge);border-radius:var(--r);padding:14px 16px;font-size:12.5px;color:var(--text2);line-height:1.7">
+          <strong style="color:var(--gold2)">ℹ️ Sources officielles</strong><br>
+          SMIC : <a href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000052703290" target="_blank" style="color:var(--blue)">Décret n° 2025-1228 du 17 déc. 2025</a> ·
+          MICO : <a href="https://legifrance.gouv.fr/codes/article_lc/LEGIARTI000006745421/" target="_blank" style="color:var(--blue)">Art. L351-10 CSS</a> ·
+          Cotisations : <a href="https://boss.gouv.fr/" target="_blank" style="color:var(--blue)">BOSS</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB CHAT -->
+    <div class="tab-content" id="tab-chat">
+      <div class="chat-wrap">
+        <div class="chat-log" id="chatLog">
+          <div class="cm ai">
+            <div class="cm-av ai">⚖️</div>
+            <div>
+              <div class="cm-bub rmd">
+                Bonjour, je suis votre assistant juridique en droit du travail français, connecté à une recherche web en temps réel.<br><br>
+                Je cite systématiquement les <strong>références exactes</strong> (n° articles, n° arrêts, dates) et fournis des <strong>liens Légifrance</strong> directs.<br><br>
+                Quelle est votre question ?
+              </div>
+              <div class="cm-meta">⚖️ Assistant IA · Web Search · <a href="https://legifrance.gouv.fr" target="_blank">Légifrance</a> · <a href="https://www.courdecassation.fr" target="_blank">Cour de cassation</a></div>
+            </div>
+          </div>
+        </div>
+        <div class="suggs" id="suggs">
+          <button class="sg" onclick="send('Derniers arrêts chambre sociale Cour de cassation 2025-2026')">⚖️ Arrêts récents</button>
+          <button class="sg" onclick="send('SMIC et chiffres clés droit du travail 2026')">💶 SMIC 2026</button>
+          <button class="sg" onclick="send('Règles licenciement faute grave et jurisprudence récente')">📋 Licenciement</button>
+          <button class="sg" onclick="send('Congés payés et arrêt maladie : revirements Cass. soc. 2025')">🏖️ Congés payés</button>
+          <button class="sg" onclick="send('Obligations CSE en 2026 : consultation, expertise, intelligence artificielle')">👥 CSE 2026</button>
+          <button class="sg" onclick="send('Formation professionnelle 2026 : suppression Pro-A, périodes de reconversion, CPF')">🎓 Formation</button>
+        </div>
+        <div class="cinput">
+          <div class="crow">
+            <textarea class="cta" id="cin" placeholder="Posez une question sur le Code du travail, un article précis, une jurisprudence..." rows="1" onkeydown="ck(event)" oninput="ah(this)"></textarea>
+            <button class="csnd" id="csnd" onclick="send()">➤</button>
+          </div>
+          <div class="chint">⚡ Recherche web temps réel · Sources : Légifrance · Cour de cassation · Ministère du Travail</div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- STATUS BAR -->
+<div class="statusbar">
+  <div style="display:flex;align-items:center;gap:5px"><div class="sb-dot"></div>Connecté</div>
+  <span>🤖 Claude API · Web Search activé</span>
+  <span>📅 2026</span>
+  <span id="sbm">Prêt</span>
+</div>
+
+<style>
+/* ── MODAL CLÉ API ── */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:1000;display:flex;align-items:center;justify-content:center}
+.modal-bg.hidden{display:none}
+.key-modal{background:#151b27;border:1px solid #2e3a52;border-radius:14px;padding:34px;max-width:460px;width:90%;animation:krise .25s ease}
+@keyframes krise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.km-seal{width:52px;height:52px;border-radius:50%;background:conic-gradient(from 0deg,#c8913a,#8b6914,#f5cc80);display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 16px}
+.km-h{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:700;color:#f0e8d0;text-align:center;margin-bottom:6px}
+.km-h em{color:#e8b060;font-style:italic}
+.km-p{font-size:12.5px;color:#8898b4;line-height:1.7;text-align:center;margin-bottom:18px}
+.km-lbl{font-size:10.5px;font-weight:600;color:#8898b4;letter-spacing:.05em;text-transform:uppercase;margin-bottom:5px}
+.km-wrap{position:relative;margin-bottom:10px}
+.km-wrap input{width:100%;background:#0a0c10;border:1.5px solid #2e3a52;border-radius:8px;padding:10px 42px 10px 13px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:#d8e0ec;outline:none;transition:border-color .15s}
+.km-wrap input:focus{border-color:#c8913a}
+.km-wrap input::placeholder{color:#4a5870}
+.km-eye{position:absolute;right:11px;top:50%;transform:translateY(-50%);background:none;border:none;color:#4a5870;cursor:pointer;font-size:15px;transition:color .15s}
+.km-eye:hover{color:#8898b4}
+.km-note{font-size:11.5px;color:#4a5870;line-height:1.65;padding:10px 13px;background:rgba(200,145,58,.06);border:1px solid rgba(200,145,58,.14);border-radius:7px;margin-bottom:20px}
+.km-note a{color:#60a8e8;text-decoration:none}
+.km-note a:hover{text-decoration:underline}
+.km-note strong{color:#e8b060}
+.km-btn{width:100%;background:linear-gradient(135deg,#c8913a,#d09030);border:none;border-radius:9px;padding:12px;font-family:'IBM Plex Sans',sans-serif;font-size:13.5px;font-weight:600;color:#0a0c10;cursor:pointer;transition:all .15s;box-shadow:0 4px 14px rgba(200,145,58,.22)}
+.km-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(200,145,58,.35)}
+.km-err{font-size:12px;color:#e05050;margin-top:8px;min-height:18px;text-align:center}
+.km-footer{display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding-top:12px;border-top:1px solid #263044}
+.km-footer span{font-size:11px;color:#4a5870}
+.km-del{background:none;border:1px solid rgba(224,80,80,.2);color:#e05050;border-radius:6px;padding:3px 10px;font-size:11px;cursor:pointer;transition:all .15s;font-family:'IBM Plex Sans',sans-serif}
+.km-del:hover{background:rgba(224,80,80,.1)}
+</style>
+
+<!-- MODAL CLÉ API -->
+<div class="modal-bg" id="modalBg">
+  <div class="key-modal">
+    <div class="km-seal">⚖️</div>
+    <div class="km-h">Travail<em>Lex</em> 2026</div>
+    <p class="km-p">Renseignez votre clé API Anthropic pour activer l'assistant juridique IA.</p>
+    <div class="km-lbl">Clé API Anthropic</div>
+    <div class="km-wrap">
+      <input type="password" id="keyInput" placeholder="sk-ant-api03-…" autocomplete="off" onkeydown="if(event.key==='Enter')saveKey()">
+      <button class="km-eye" onclick="toggleEye()">👁</button>
+    </div>
+    <div class="km-note">
+      <strong>Où l'obtenir ?</strong> <a href="https://console.anthropic.com/api-keys" target="_blank">console.anthropic.com</a> → API Keys → Create Key<br><br>
+      <strong>Sécurité :</strong> Stockée uniquement dans votre navigateur (<code style="font-family:monospace;font-size:11px">localStorage</code>). Jamais transmise à un tiers. L'appel va directement de votre navigateur vers api.anthropic.com.
+    </div>
+    <button class="km-btn" onclick="saveKey()">Démarrer l'application →</button>
+    <div class="km-err" id="keyErr"></div>
+    <div class="km-footer" id="kmFooter" style="display:none">
+      <span id="keyPreview"></span>
+      <button class="km-del" onclick="deleteKey()">Supprimer la clé</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// CLÉ API — stockée dans localStorage, jamais dans le code
+// ═══════════════════════════════════════════════════════
+const KEY_STORE = 'travaillex_apikey_v1';
+const getKey = () => localStorage.getItem(KEY_STORE) || '';
+
+function saveKey() {
+  const v = document.getElementById('keyInput').value.trim();
+  const err = document.getElementById('keyErr');
+  if (!v) { err.textContent = 'Veuillez entrer votre clé API.'; return; }
+  if (!v.startsWith('sk-ant-')) { err.textContent = 'Clé invalide — elle doit commencer par sk-ant-…'; return; }
+  localStorage.setItem(KEY_STORE, v);
+  document.getElementById('modalBg').classList.add('hidden');
+  err.textContent = '';
+  setSB('Clé API enregistrée ✓');
+}
+
+function deleteKey() {
+  if (!confirm('Supprimer la clé API ?')) return;
+  localStorage.removeItem(KEY_STORE);
+  document.getElementById('keyInput').value = '';
+  document.getElementById('kmFooter').style.display = 'none';
+}
+
+function showModal() {
+  const key = getKey();
+  document.getElementById('keyInput').value = key;
+  document.getElementById('keyErr').textContent = '';
+  if (key) {
+    document.getElementById('keyPreview').textContent = 'Actuelle : ' + key.substring(0,12) + '…' + key.slice(-4);
+    document.getElementById('kmFooter').style.display = 'flex';
+  } else {
+    document.getElementById('kmFooter').style.display = 'none';
+  }
+  document.getElementById('modalBg').classList.remove('hidden');
+}
+
+function toggleEye() {
+  const inp = document.getElementById('keyInput');
+  inp.type = inp.type === 'password' ? 'text' : 'password';
+}
+
+window.addEventListener('load', () => { if (!getKey()) showModal(); });
+
+// ═══════════════════════════════════════════════════════
+// CONFIG — appel direct navigateur → api.anthropic.com
+// ═══════════════════════════════════════════════════════
+const API_ENDPOINT = 'https://api.anthropic.com/v1/messages';
+
+const SYS = `Tu es un juriste expert en droit du travail français.
+Utilise systématiquement le web search pour trouver les informations les plus récentes.
+Règles impératives :
+1. Recherche TOUJOURS les derniers textes et jurisprudences avant de répondre.
+2. Cite les références exactes : n° arrêts, dates, n° articles du Code du travail, n° de lois.
+3. Fournis des liens Légifrance directs (https://legifrance.gouv.fr/...).
+4. Signale clairement : texte en vigueur / revirement / projet en discussion.
+5. Format markdown : ## titres, **gras**, - listes, > citations.
+6. Structure : résumé → textes applicables → jurisprudence → impact pratique → liens.`;
+
+// ═══════════════════════════════════════════════════════
+// DONNÉES
+// ═══════════════════════════════════════════════════════
+const ARTS = [
+  {id:'contrat',   num:'L1221',label:'Contrat de travail',   tag:'',  lf:'https://legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072050/LEGISCTA000006177810/', q:`Explique les règles fondamentales du contrat de travail (art. L1221), définition jurisprudentielle, période d'essai, jurisprudence récente 2025-2026.`},
+  {id:'cdd',       num:'L1242',label:'CDD',                  tag:'m', lf:'https://legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072050/LEGISCTA000006177816/', q:`Règles CDD en 2026 (art. L1242), nouveaux secteurs CDD d'usage (décret 18 juin 2025), conditions de requalification, jurisprudence récente.`},
+  {id:'licenciement',num:'L1232',label:'Licenciement personnel',tag:'',lf:'https://legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072050/LEGISCTA000006177828/', q:`Procédure licenciement motif personnel (art. L1232), critères faute grave, derniers arrêts Cour de cassation chambre sociale.`},
+  {id:'eco',       num:'L1233',label:'Licenciement économique',tag:'',lf:'https://legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072050/LEGISCTA000006195580/', q:`Licenciement économique (art. L1233) : définition, PSE, ordre, reclassement, jurisprudence récente 2025-2026.`},
+  {id:'discrimination',num:'L1132',label:'Discrimination',   tag:'m', lf:'https://legifrance.gouv.fr/codes/article_lc/LEGIARTI000006900787/', q:`Discrimination (art. L1132-1) avec loi du 30 juin 2025 sur la protection des personnes en projet parental, jurisprudence récente.`},
+  {id:'harcmoral', num:'L1152',label:'Harcèlement moral',    tag:'j', lf:'https://legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072050/LEGISCTA000006177836/', q:`Harcèlement moral (art. L1152), obligations employeur, harcèlement institutionnel, arrêts Cour de cassation 2025-2026.`},
+  {id:'harcsexuel',num:'L1153',label:'Harcèlement sexuel',   tag:'j', lf:'https://legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072050/LEGISCTA000006177838/', q:`Harcèlement sexuel (art. L1153) et arrêt Cass. soc. 14 janvier 2026 n° 24-19.544 : licenciement sans enquête interne préalable.`},
+  {id:'conge-nais',num:'L1225',label:'Congé naissance',      tag:'n', lf:'https://legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072050/LEGISCTA000006195587/', q:`Nouveau congé de naissance créé pour les enfants nés à compter du 1er janvier 2026, prenable dès le 1er juillet 2026 : bénéficiaires, durée, indemnisation.`},
+  {id:'heures',    num:'L3121',label:'Heures supplémentaires',tag:'j', lf:'https://legifrance.gouv.fr/codes/article_lc/LEGIARTI000033020429/', q:`Heures supplémentaires (art. L3121-28) et revirement Altran Cass. soc. 10 sept. 2025 n° 23-14.455 sur la prise en compte des congés payés dans le seuil hebdomadaire.`},
+  {id:'conges',    num:'L3141',label:'Congés payés',          tag:'j', lf:'https://legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072050/LEGISCTA000033020434/', q:`Congés payés (art. L3141) : acquisition en cas de maladie, report si maladie pendant congés (revirement Cass. soc. 10 sept. 2025 n° 23-22.732), loi n° 2025-1249 du 22 déc. 2025.`},
+  {id:'smic',      num:'L3231',label:'SMIC',                  tag:'m', lf:'https://legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072050/LEGISCTA000006195618/', q:`Art. L3231-2 SMIC : montants au 1er janvier 2026 (décret n° 2025-1228 : 12,02€/h brut, 1823,03€/mois brut), historique des revalorisations récentes.`},
+  {id:'cse',       num:'L2312',label:'Attributions CSE',      tag:'j', lf:'https://legifrance.gouv.fr/codes/article_lc/LEGIARTI000035630440/', q:`Attributions consultation CSE (art. L2312-8), expertises (art. L2315-94), arrêts Carrefour n° 24-13.756 et SNCF n° 24-15.989 du 19 nov. 2025, décision TJ Nanterre 29 janv. 2026 sur l'IA.`},
+  {id:'negoc',     num:'L2232',label:'Négociation collective',tag:'',  lf:'https://legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072050/LEGISCTA000006195631/', q:`Négociation collective d'entreprise (art. L2232) en 2026 : accords majoritaires, loi n° 2025-989.`},
+  {id:'seniors',   num:'L2242',label:'Emploi seniors',        tag:'n', lf:'https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000052430940', q:`Nouvelles obligations de négociation emploi des seniors (loi n° 2025-989 du 24 oct. 2025) : périodicité, diagnostic préalable obligatoire.`},
+  {id:'cpf',       num:'L6323',label:'CPF',                   tag:'m', lf:'https://legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072050/LEGISCTA000037385662/', q:`CPF en 2026 (art. L6323) : participation forfaitaire revalorisée, modifications loi n° 2025-989.`},
+  {id:'entretien', num:'L6315',label:'Entretien professionnel',tag:'m',lf:'https://legifrance.gouv.fr/codes/article_lc/LEGIARTI000028697279/', q:`Entretien professionnel (art. L6315-1) modifié par loi n° 2025-989 : passage à 8 ans, obligations, sanction.`},
+  {id:'reconversion',num:'L6324',label:'Périodes de reconversion',tag:'n',lf:'https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000052430940', q:`Périodes de reconversion (art. L6324-1+) remplaçant le Pro-A depuis janvier 2026 : conditions, financement OPCO.`},
+];
+
+const GROUPS = [
+  {l:'Livre I — Relations individuelles', ids:['contrat','cdd','licenciement','eco','discrimination','harcmoral','harcsexuel','conge-nais']},
+  {l:'Livre II — Relations collectives',  ids:['cse','negoc','seniors']},
+  {l:'Livre III — Durée du travail',      ids:['heures','conges','smic']},
+  {l:'Livre VI — Formation',              ids:['cpf','entretien','reconversion']},
+];
+
+const CHIFFRES = [
+  {v:'12,02 €/h',  l:'SMIC horaire brut',          ch:'▲ +1,18 %',       cls:'cup'},
+  {v:'1 823,03 €', l:'SMIC mensuel brut',           ch:'▲ +21,23 €',      cls:'cup'},
+  {v:'1 443,11 €', l:'SMIC mensuel net',            ch:'Hors Mayotte',     cls:'cne'},
+  {v:'4,25 €',     l:'Minimum garanti',             ch:'Revalorisation',   cls:'cup'},
+  {v:'756,29 €',   l:'MICO non majoré / mois',      ch:'▲ +1,18 %',       cls:'cup'},
+  {v:'903,93 €',   l:'MICO majoré / mois',          ch:'▲ +1,18 %',       cls:'cup'},
+  {v:'25 %',       l:'ACRE nouveaux bénéficiaires', ch:'↓ vs 50 % en 2025',cls:'cdn'},
+  {v:'2,08 %',     l:'Assurance chômage',           ch:'▼ vs 2,12 %',     cls:'cdn'},
+  {v:'8 ans',      l:'Entretien professionnel',     ch:'Était 6 ans',      cls:'cne'},
+  {v:'+2 %',       l:'Plafond Sécurité sociale',    ch:'Revalorisation',   cls:'cup'},
+];
+
+const JP_DATA = [
+  {ref:'Cass. soc., 10 sept. 2025 — n° 23-22.732 (FP-B+R)',t:'Report des congés payés en cas de maladie pendant les congés',chips:[{l:'REVIREMENT',c:'chip-r'},{l:'MAJEUR',c:'chip-a'}],domain:'Congés payés — Art. L. 3141-3 C. trav.',principe:'La Cour de cassation reconnaît le droit au report des congés pour un salarié tombant malade pendant ses congés payés. Fin d\'une jurisprudence de 1996. Alignement sur la directive 2003/88/CE.',impact:'Codifié par loi n° 2025-1249 du 22 déc. 2025. L\'employeur doit permettre le report.',arts:[{l:'L. 3141-3',url:'https://legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072050/LEGISCTA000033020434/'}],src:'Legifrance · Lexbase · ANDRH',lf:'https://legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072050/LEGISCTA000033020434/',date:'10 sept. 2025'},
+  {ref:'Cass. soc., 10 sept. 2025 — n° 23-14.455 (FP-B+R) — Altran',t:'Congés payés inclus dans le seuil hebdomadaire des heures supplémentaires',chips:[{l:'REVIREMENT',c:'chip-r'},{l:'MAJEUR',c:'chip-a'}],domain:'Durée du travail — Art. L. 3121-28 C. trav.',principe:'Les jours de CP doivent être assimilés à du temps de travail pour le seuil de déclenchement des heures supp. (35h). Écarte partiellement l\'art. L. 3121-28 par application du droit UE (CJUE C-514/20).',impact:'Rappels de salaire rétroactifs possibles. Révision SIRH nécessaire.',arts:[{l:'L. 3121-28',url:'https://legifrance.gouv.fr/codes/article_lc/LEGIARTI000033020429/'}],src:'Legifrance · Lexbase · CMS Law',lf:'https://legifrance.gouv.fr/codes/article_lc/LEGIARTI000033020429/',date:'10 sept. 2025'},
+  {ref:'Cass. soc., 19 nov. 2025 — n° 24-13.756 & n° 24-15.989',t:'Expertise CSE : conditions du projet important et du risque grave',chips:[{l:'PRÉCISION',c:'chip-g'}],domain:'CSE — Art. L. 2315-94 C. trav.',principe:'Carrefour : le CSE doit prouver des mesures d\'adaptation locales spécifiques. SNCF : si l\'employeur a pris des mesures correctives efficaces, le risque n\'est plus actuel.',impact:'Les élus CSE doivent renforcer leur stratégie probatoire avant toute délibération.',arts:[{l:'L. 2315-94',url:'https://legifrance.gouv.fr/codes/article_lc/LEGIARTI000036762066/'}],src:'UNSA Juridique · Legifrance',lf:'https://legifrance.gouv.fr/codes/article_lc/LEGIARTI000036762066/',date:'19 nov. 2025'},
+  {ref:'Cass. soc., 14 janv. 2026 — n° 24-19.544',t:'Licenciement pour harcèlement sexuel sans enquête interne préalable',chips:[{l:'PRÉCISION',c:'chip-g'}],domain:'Droit disciplinaire — Art. L. 1153-1 C. trav.',principe:'Aucun texte n\'impose une enquête interne avant le licenciement pour harcèlement sexuel. La preuve se fait par tous moyens licites.',impact:'L\'employeur peut agir sur la base de témoignages concordants. L\'obligation de prévention (sécurité) demeure distincte.',arts:[{l:'L. 1153-1',url:'https://legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072050/LEGISCTA000006177838/'},{l:'L. 1152-1',url:'https://legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072050/LEGISCTA000006177836/'}],src:'Actance Avocats · Souffrance et Travail',lf:'https://legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072050/LEGISCTA000006177838/',date:'14 janv. 2026'},
+  {ref:'T.J. Nanterre (réf.), 29 janv. 2026',t:'Obligation de consultation du CSE avant déploiement d\'outils IA',chips:[{l:'INÉDIT',c:'chip-b'}],domain:'CSE & Nouvelles technologies — Art. L. 2312-8 C. trav.',principe:'Le déploiement d\'outils d\'intelligence artificielle affectant les conditions de travail ou la surveillance des salariés nécessite une consultation préalable du CSE.',impact:'Tout projet IA impactant l\'organisation du travail = consultation CSE obligatoire avant déploiement.',arts:[{l:'L. 2312-8',url:'https://legifrance.gouv.fr/codes/article_lc/LEGIARTI000035630440/'}],src:'ANDRH',lf:'https://legifrance.gouv.fr/codes/article_lc/LEGIARTI000035630440/',date:'29 janv. 2026'},
+];
+
+// ═══════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════
+let chatHist = [], loading = false, currentLfUrl = 'https://legifrance.gouv.fr/codes/texte_lc/LEGITEXT000006072050/';
+const artMap = Object.fromEntries(ARTS.map(a => [a.id, a]));
+
+// ═══════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════
+function init() {
+  buildTree();
+  buildChiffres();
+  buildJP();
+}
+
+// ═══════════════════════════════════════════════════════
+// TREE
+// ═══════════════════════════════════════════════════════
+function buildTree() {
+  const t = document.getElementById('tree');
+  GROUPS.forEach((g, gi) => {
+    const grp = document.createElement('div');
+    const h = document.createElement('div');
+    h.className = 'tg-head';
+    const arr = document.createElement('span');
+    arr.className = 'tg-arrow' + (gi === 0 ? ' o' : '');
+    arr.textContent = '▶';
+    h.appendChild(arr);
+    h.appendChild(document.createTextNode(' ' + g.l));
+    const kids = document.createElement('div');
+    kids.className = 'tg-kids' + (gi === 0 ? ' o' : '');
+    h.onclick = () => { arr.classList.toggle('o'); kids.classList.toggle('o'); };
+
+    g.ids.forEach(id => {
+      const a = artMap[id]; if (!a) return;
+      const el = document.createElement('div');
+      el.className = 'ti'; el.dataset.id = id;
+      const num = document.createElement('span');
+      num.className = 'ti-num'; num.textContent = a.num;
+      const lbl = document.createElement('span');
+      lbl.textContent = a.label;
+      el.appendChild(num); el.appendChild(lbl);
+      if (a.tag) {
+        const tg = document.createElement('span');
+        tg.className = 'ti-tag tt-' + a.tag;
+        tg.textContent = a.tag === 'n' ? 'NEW' : a.tag === 'm' ? 'MÀJ' : 'JP';
+        el.appendChild(tg);
+      }
+      el.onclick = () => loadArt(id);
+      kids.appendChild(el);
+    });
+    grp.appendChild(h); grp.appendChild(kids); t.appendChild(grp);
+  });
+}
+
+function filterTree(v) {
+  v = v.toLowerCase().trim();
+  document.querySelectorAll('.ti').forEach(el => {
+    const show = !v || el.textContent.toLowerCase().includes(v);
+    el.style.display = show ? '' : 'none';
+    if (show && v) {
+      const k = el.closest('.tg-kids');
+      if (k) { k.classList.add('o'); k.previousElementSibling?.querySelector('.tg-arrow')?.classList.add('o'); }
+    }
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+// TABS & VIEWS
+// ═══════════════════════════════════════════════════════
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('on'));
+  document.getElementById('tab-' + name).classList.add('on');
+  document.querySelectorAll('.pill').forEach(b => b.classList.remove('on'));
+  if (btn) btn.classList.add('on');
+  document.getElementById('vbar').style.display = name === 'art' ? 'flex' : 'none';
+}
+
+function setView(v) {
+  const ai = document.getElementById('paneAI'), lf = document.getElementById('paneLF'), dh = document.getElementById('dragH');
+  document.getElementById('vbAI').classList.toggle('on', v === 'ai');
+  document.getElementById('vbSplit').classList.toggle('on', v === 'split');
+  if (v === 'ai') { ai.style.cssText = 'display:flex;flex:1'; lf.style.display = 'none'; dh.style.display = 'none'; }
+  else { ai.style.cssText = 'display:flex;flex:1'; lf.style.cssText = 'display:flex;flex:1'; dh.style.display = 'block'; updLF(currentLfUrl); }
+}
+
+function updLF(url) {
+  currentLfUrl = url;
+  document.getElementById('lfUrl').textContent = url.replace('https://', '').substring(0, 60) + '…';
+  document.getElementById('lfNewTab').href = url;
+  document.getElementById('lfOpenBtn').href = url;
+  document.getElementById('lfDirect').href = url;
+}
+
+// Drag resize
+(function () {
+  let dr = false, sx, sw;
+  const h = document.getElementById('dragH');
+  h.addEventListener('mousedown', e => { dr = true; sx = e.clientX; sw = document.getElementById('paneAI').getBoundingClientRect().width; h.classList.add('dr'); document.body.style.cssText = 'cursor:col-resize;user-select:none'; });
+  document.addEventListener('mousemove', e => { if (!dr) return; const dx = e.clientX - sx; const wrap = document.getElementById('splitWrap').getBoundingClientRect().width; const nw = Math.max(260, Math.min(sw + dx, wrap - 220)); document.getElementById('paneAI').style.cssText = `flex:none;width:${nw}px`; document.getElementById('paneLF').style.flex = '1'; });
+  document.addEventListener('mouseup', () => { if (!dr) return; dr = false; h.classList.remove('dr'); document.body.style.cssText = ''; });
+})();
+
+// ═══════════════════════════════════════════════════════
+// FULLSCREEN
+// ═══════════════════════════════════════════════════════
+function toggleFullscreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen().catch(() => {});
+  } else {
+    document.exitFullscreen().catch(() => {});
+  }
+}
+document.addEventListener('fullscreenchange', () => {
+  const btn = document.querySelector('.fullscreen-btn');
+  btn.textContent = document.fullscreenElement ? '✕' : '⛶';
+  btn.title = document.fullscreenElement ? 'Quitter le plein écran' : 'Plein écran (F11)';
+});
+document.addEventListener('keydown', e => { if (e.key === 'F11') { e.preventDefault(); toggleFullscreen(); } });
+
+// ═══════════════════════════════════════════════════════
+// ARTICLE LOADER
+// ═══════════════════════════════════════════════════════
+async function loadArt(id) {
+  const a = artMap[id]; if (!a) return;
+  document.querySelectorAll('.ti').forEach(el => el.classList.toggle('sel', el.dataset.id === id));
+  switchTab('art', document.querySelector('.pill'));
+
+  document.getElementById('wscreen').style.display = 'none';
+  document.getElementById('artContent').style.display = 'block';
+  updLF(a.lf);
+
+  const tcls = { n: 'tt-n', m: 'tt-m', j: 'tt-j' };
+  const tlbl = { n: 'NEW', m: 'MÀJ', j: 'JP' };
+
+  document.getElementById('artContent').innerHTML = `
+    <div class="art-block">
+      <div class="art-head">
+        <div>
+          <div class="art-ref">${a.num} — Code du travail</div>
+          <div class="art-title">${a.label}${a.tag ? ` <span class="ti-tag ${tcls[a.tag]}" style="font-size:10px;vertical-align:middle">${tlbl[a.tag]}</span>` : ''}</div>
+        </div>
+        <div class="art-btns">
+          <a class="abtn abtn-blue" href="${a.lf}" target="_blank">🏛️ Légifrance ↗</a>
+          <button class="abtn" onclick="setView('split')">⬛ Vue double</button>
+          <button class="abtn abtn-gold" onclick="goChat('${a.q.replace(/'/g, "\\'").replace(/\n/g, ' ')}')">🤖 Analyser</button>
+        </div>
+      </div>
+      <div class="art-body rmd" id="abody">
+        <div style="display:flex;align-items:center;gap:10px;padding:16px 0;color:var(--text2)">
+          <div class="typing"><span style="margin-right:8px;font-size:12.5px">🔍 Recherche en cours (web search activé)...</span><div class="tdots"><span></span><span></span><span></span></div></div>
+        </div>
+      </div>
+      <div class="art-foot">
+        <span>Source : API Claude · Web Search · <a href="${a.lf}" target="_blank">Légifrance</a></span>
+        <span id="astamp">Chargement...</span>
+      </div>
+    </div>`;
+
+  setSB('Interrogation IA...');
+  try {
+    const r = await callAI(a.q, false);
+    document.getElementById('abody').innerHTML = `<div class="rmd">${md(r)}</div>`;
+    document.getElementById('astamp').textContent = 'Actualisé ' + new Date().toLocaleString('fr-FR');
+    setSB('Prêt');
+  } catch (e) {
+    document.getElementById('abody').innerHTML = `<p style="color:var(--red)">⚠️ Erreur : ${e.message}</p><p style="margin-top:8px"><a href="${a.lf}" target="_blank" style="color:var(--blue)">→ Consulter directement sur Légifrance</a></p>`;
+    setSB('Erreur');
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// JURISPRUDENCES
+// ═══════════════════════════════════════════════════════
+function buildJP() {
+  const c = document.getElementById('jpStatic');
+  JP_DATA.forEach(jp => { c.innerHTML += renderJP(jp); });
+}
+
+function renderJP(jp) {
+  const chips = jp.chips.map(c => `<span class="chip ${c.c}">${c.l}</span>`).join('');
+  const arts  = jp.arts.map(a => `<a class="art-pill" href="${a.url}" target="_blank">${a.l}</a>`).join('');
+  return `<div class="jp-card">
+    <div class="jp-head">
+      <div><div class="jp-ref">${jp.ref}</div><div class="jp-t">${jp.t}</div></div>
+      <div class="jp-chips">${chips}</div>
+    </div>
+    <div class="jp-body">
+      <div class="jp-lbl">Domaine</div><div class="jp-txt">${jp.domain}</div>
+      <div class="jp-lbl">Principe dégagé</div><div class="jp-txt">${jp.principe}</div>
+      <div class="jp-lbl">Impact pratique</div><div class="jp-txt">${jp.impact}</div>
+      <div class="jp-lbl">Articles visés</div><div class="jp-pills">${arts}</div>
+    </div>
+    <div class="jp-foot">
+      <span style="color:var(--text3)">${jp.src}</span>
+      <div class="jp-foot-btns">
+        <span style="color:var(--text3)">${jp.date}</span>
+        <a class="abtn abtn-blue" href="${jp.lf}" target="_blank" style="font-size:10.5px;padding:3px 8px">Légifrance ↗</a>
+        <button class="abtn abtn-gold" onclick="goChat('Analysez en détail l\\'arrêt : ${jp.ref.replace(/'/g, "\\'").replace(/\n/g,' ')} — ${jp.t.replace(/'/g,"\\'")}')" style="font-size:10.5px;padding:3px 8px">🤖 Analyser</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+async function loadJurisLive() {
+  const btn = document.getElementById('jpRefBtn'), lv = document.getElementById('jpLive');
+  btn.disabled = true;
+  lv.innerHTML = `<div style="padding:20px 0"><div class="typing"><span style="margin-right:8px;font-size:13px">🔍 Recherche des jurisprudences les plus récentes...</span><div class="tdots"><span></span><span></span><span></span></div></div></div>`;
+  setSB('Chargement jurisprudences live...');
+  try {
+    const r = await callAI(`Recherche et liste les arrêts les plus récents de la chambre sociale de la Cour de cassation en droit du travail publiés en 2026. Pour chaque arrêt : référence exacte (n° pourvoi, date), domaine, principe dégagé, impact pratique, qualification (revirement/précision/confirmation). Couvre : congés payés, heures supplémentaires, harcèlement, CSE, IA, télétravail, négociation collective.`, false);
+    lv.innerHTML = `
+      <div style="margin:14px 0 12px;padding:10px 14px;background:var(--green-dim);border-left:3px solid var(--green);border-radius:0 6px 6px 0;font-size:12px;color:var(--green)">
+        ✅ Actualisation effectuée via recherche IA — ${new Date().toLocaleString('fr-FR')}
+      </div>
+      <div class="art-block">
+        <div class="art-head">
+          <div class="art-title">Jurisprudences récentes — Recherche temps réel</div>
+          <a class="abtn abtn-blue" href="https://www.courdecassation.fr/recherche-jurisprudentielle" target="_blank">Cour de cassation ↗</a>
+        </div>
+        <div class="art-body rmd">${md(r)}</div>
+        <div class="art-foot"><span>API Claude · Web Search</span><span>${new Date().toLocaleString('fr-FR')}</span></div>
+      </div>`;
+    setSB('Jurisprudences actualisées');
+  } catch (e) {
+    lv.innerHTML = `<p style="color:var(--red);padding:12px">⚠️ ${e.message}</p>`;
+    setSB('Erreur');
+  }
+  btn.disabled = false;
+}
+
+// ═══════════════════════════════════════════════════════
+// CHIFFRES
+// ═══════════════════════════════════════════════════════
+function buildChiffres() {
+  const g = document.getElementById('cg');
+  CHIFFRES.forEach(c => {
+    const d = document.createElement('div'); d.className = 'cc';
+    d.innerHTML = `<div class="cv">${c.v}</div><div class="cl">${c.l}</div><div class="ch ${c.cls}">${c.ch}</div>`;
+    g.appendChild(d);
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+// CHAT
+// ═══════════════════════════════════════════════════════
+function goChat(q) {
+  switchTab('chat', document.querySelectorAll('.pill')[3]);
+  document.getElementById('cin').value = q;
+  send(q);
+}
+
+async function send(msg) {
+  if (typeof msg !== 'string') msg = document.getElementById('cin').value.trim();
+  if (!msg || loading) return;
+  document.getElementById('cin').value = '';
+  document.getElementById('cin').style.height = '42px';
+  loading = true; document.getElementById('csnd').disabled = true;
+  document.getElementById('suggs').style.display = 'none';
+  appendCM('u', msg);
+  chatHist.push({ role: 'user', content: msg });
+  const tid = appendTyping();
+  setSB('Recherche en cours...');
+  try {
+    const r = await callAI(msg, true);
+    removeTyping(tid); appendCM('ai', r);
+    chatHist.push({ role: 'assistant', content: r });
+    setSB('Prêt');
+  } catch (e) {
+    removeTyping(tid); appendCM('ai', `**Erreur de connexion** : ${e.message}`);
+    setSB('Erreur');
+  }
+  loading = false; document.getElementById('csnd').disabled = false;
+}
+
+function appendCM(role, text) {
+  const log = document.getElementById('chatLog'), d = document.createElement('div');
+  d.className = 'cm ' + role;
+  d.innerHTML = `<div class="cm-av ${role === 'u' ? 'hu' : 'ai'}">${role === 'u' ? '👤' : '⚖️'}</div>
+    <div><div class="cm-bub rmd">${md(text)}</div>
+    <div class="cm-meta">${role === 'ai' ? '⚖️ IA · Web Search · ' : '👤 Vous · '}${new Date().toLocaleTimeString('fr-FR')}</div></div>`;
+  log.appendChild(d); log.scrollTop = log.scrollHeight;
+}
+
+function appendTyping() {
+  const log = document.getElementById('chatLog'), id = 't' + Date.now(), d = document.createElement('div');
+  d.className = 'cm ai'; d.id = id;
+  d.innerHTML = `<div class="cm-av ai">⚖️</div><div class="typing"><span style="margin-right:6px;font-size:12.5px">Recherche en cours</span><div class="tdots"><span></span><span></span><span></span></div></div>`;
+  log.appendChild(d); log.scrollTop = log.scrollHeight; return id;
+}
+
+function removeTyping(id) { document.getElementById(id)?.remove(); }
+function ck(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); } }
+function ah(el) { el.style.height = '42px'; el.style.height = Math.min(el.scrollHeight, 120) + 'px'; }
+function setSB(m) { document.getElementById('sbm').textContent = m; }
+
+// ═══════════════════════════════════════════════════════
+// API CALL — appel direct navigateur → api.anthropic.com
+// La clé est lue depuis localStorage au moment de l'appel
+// Elle n'est jamais dans le code source HTML
+// ═══════════════════════════════════════════════════════
+async function callAI(userMsg, useHistory) {
+  const key = getKey();
+  if (!key) { showModal(); throw new Error('Clé API manquante — veuillez la renseigner.'); }
+
+  const msgs = useHistory && chatHist.length > 0
+    ? [...chatHist, { role: 'user', content: userMsg }]
+    : [{ role: 'user', content: userMsg }];
+
+  const r = await fetch(API_ENDPOINT, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': key,
+      'anthropic-version': '2023-06-01',
+      'anthropic-beta': 'web-search-2025-03-05',
+      'anthropic-dangerous-direct-browser-access': 'true',
+    },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: 1000,
+      system: SYS,
+      messages: msgs,
+      tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+    }),
+  });
+
+  if (!r.ok) {
+    const err = await r.json().catch(() => ({}));
+    if (r.status === 401) { localStorage.removeItem(KEY_STORE); showModal(); }
+    throw new Error(err.error?.message || `HTTP ${r.status}`);
+  }
+
+  const data = await r.json();
+  return data.content.filter(b => b.type === 'text').map(b => b.text).join('\n\n') || 'Aucune réponse.';
+}
+
+// ═══════════════════════════════════════════════════════
+// MARKDOWN
+// ═══════════════════════════════════════════════════════
+function md(t) {
+  if (!t) return '';
+  return t
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/```[\w]*\n?([\s\S]*?)```/g,'<pre><code>$1</code></pre>')
+    .replace(/`([^`]+)`/g,'<code>$1</code>')
+    .replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>')
+    .replace(/\*([^*]+)\*/g,'<em>$1</em>')
+    .replace(/^#{1,2} (.+)$/gm,'<h3>$1</h3>')
+    .replace(/^#{3,4} (.+)$/gm,'<h4>$1</h4>')
+    .replace(/^---+$/gm,'<hr>')
+    .replace(/^&gt; (.+)$/gm,'<blockquote>$1</blockquote>')
+    .replace(/^\- (.+)$/gm,'<li>$1</li>').replace(/^\d+\. (.+)$/gm,'<li>$1</li>')
+    .replace(/(<li>.*?<\/li>\n?)+/g,'<ul>$&</ul>')
+    .replace(/https?:\/\/legifrance\.gouv\.fr[^\s<"&]*/g, u => `<a href="${u.replace(/&amp;/g,'&')}" target="_blank">${u.replace('https://','').substring(0,55)}${u.length > 63 ? '…' : ''}</a>`)
+    .replace(/https?:\/\/((?!legifrance)[^\s<"&]+)/g,'<a href="https://$1" target="_blank">$1</a>')
+    .replace(/\n\n+/g,'<br><br>').replace(/(?<!>)\n(?!<)/g,'<br>');
+}
+
+init();
+</script>
+</body>
+</html>
